@@ -7,6 +7,7 @@ import java.util.ArrayList;
 //red=4 triples the word's total score
 // star=5 doubles the word's total score
 public class Board {
+    //board
     private static Board b = null;
     Tile[][] allBorad = new Tile[15][15];
     int[][] score = new int[15][15];
