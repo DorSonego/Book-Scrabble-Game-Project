@@ -101,9 +101,16 @@ iv. The above calculation is true for every new word created on the board follow
 8. The game will end after N rounds.
 
 A legal word must meet all of the following conditions:
+<<<<<<< HEAD
 * Written from left to right or from top to bottom (and not in any other way)
 * A word that appears in one of the books chosen for the game
 * Leans on one of the existing tiles on the board
 * Does not produce other illegal words on the board
+=======
+* Written from left to right or from top to bottom (and not in any other way).
+* A word that appears in one of the books chosen for the game.
+* Leans on one of the existing tiles on the board.
+* Does not produce other illegal words on the board.
+>>>>>>> 9cf6fbe29af424865435f74459a0266a4d49e6c4
 
 
