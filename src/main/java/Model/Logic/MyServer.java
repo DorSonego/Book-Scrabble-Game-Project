@@ -17,7 +17,7 @@ public class MyServer {
         stop=false;
     }
 
-    private void runServer() {
+    public void runServer() {
         ServerSocket server=null;
         Socket aClient=null;
         try {
