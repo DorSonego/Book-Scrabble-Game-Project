@@ -1,11 +1,10 @@
 package Model.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ScoreBoard {
-    List<String> scoreList=new ArrayList<>();
-
+    Map <Integer,String> scores = new HashMap<>();
+    //needs an implementation
     public ScoreBoard()
     {
 
