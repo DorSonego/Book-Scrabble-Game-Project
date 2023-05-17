@@ -108,6 +108,8 @@ public class Board {
         return copy;
     }
     public boolean dictionaryLegal() {return true;}
+
+    //need implementation////////////////////////////////////////////////
     public boolean isOverBoard(Word w) {
         if (w.getRow() < 0 || w.getRow() > 15)
             return false;

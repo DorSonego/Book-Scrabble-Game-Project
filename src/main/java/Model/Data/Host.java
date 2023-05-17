@@ -1,12 +1,9 @@
 package Model.Data;
 
-import Model.Logic.ClientHandler;
 import Model.Logic.Dictionary;
 import Model.Logic.DictionaryManager;
 import Model.Logic.MyServer;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -17,12 +14,7 @@ public class Host extends Observable implements IPlayer {
     int id=0;
     Tile.Bag bag;
     ScoreBoard scoreBoard;
-
-
-    int port = 80;
-
-
-    MyServer myServer=new MyServer(this.port);
+    MyServer myServer=new MyServer();
     public Host()
     {
         this.myBoard=Board.getBoard();
