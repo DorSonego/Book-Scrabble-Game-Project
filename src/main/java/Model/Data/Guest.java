@@ -1,46 +1,44 @@
 package Model.Data;
 
+import Model.Logic.ClientHandler;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 import java.util.Observer;
+import java.util.Scanner;
 
-public class Guest implements Observer, IPlayer {
+public class Guest implements Observable {
+
 
     Host host;
+    Socket hostSocket;
     List<Tile> myTiles;
     Board myBoard;
+    Scanner in;
+    Scanner out;
+    guestClientHandler gs=new guestClientHandler();
     public Guest(int id)
     {
-        this.host=new Host();
-        this.myTiles= new ArrayList<>();
-        this.myBoard=host.myBoard;
-        host.addObserver(this);
-        myTiles.add(drawTile());
-    }
-
-    @Override
-    public void tryPlaceWord(Word word) {
-        host.tryPlaceWord(word);
-    }
-
-    @Override
-    public void challenge(Word word) {
-        host.challenge(word);
-    }
-
-    @Override
-    public void passTurn() {
 
     }
-
-    @Override
-    public Tile drawTile() {
-        return host.drawTile();
+    public void passTurn()
+    {
+        gs.passTurn();
+    }
+    public void connectToHost(int port,String ip)
+    {
+        try {
+             hostSocket = new Socket(ip,port);
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException("unable to connect to Host");
+        }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        myBoard=host.myBoard;
-    }
+
 }

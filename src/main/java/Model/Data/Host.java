@@ -1,20 +1,25 @@
 package Model.Data;
 
+import Model.Logic.ClientHandler;
 import Model.Logic.Dictionary;
 import Model.Logic.DictionaryManager;
 import Model.Logic.MyServer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.util.*;
 
-public class Host extends Observable implements IPlayer {
+public class Host extends Observable  {
     Board myBoard;
-    int id=0;
+    static Host host;
+    int id=0;int currentTurn=0;
+    List<player> players=new ArrayList<>();
     Tile.Bag bag;
     ScoreBoard scoreBoard;
-    MyServer myServer=new MyServer();
+    Socket socket = new Socket();
+    MyServer myServer=new MyServer(socket.getPort(),new hostClientHandler());
+
     public Host()
     {
         this.myBoard=Board.getBoard();
@@ -22,52 +27,45 @@ public class Host extends Observable implements IPlayer {
         this.scoreBoard=new ScoreBoard();
 
     }
-
-    public Board sendBoard()
+    public void addPlayer(String name)
     {
-        return myBoard;
+        players.add(new player(name,++id));
     }
-    @Override
-    public synchronized void addObserver(Observer o) {
-        super.addObserver(o);
-    }
-
-
-    public String convertWordToString(Word word)
+    public static Host getHost()
     {
-        StringBuilder sb=new StringBuilder();
-        for (Tile tile:word.tileWord) {
-            sb.append(tile.getLetter());
-        }
-        return sb.toString();
+         if (host==null)
+             host=new Host();
+         return host;
     }
-
-    @Override
-    public void tryPlaceWord(Word word) {
-       int score= myBoard.tryPlaceWord(word);
-       if (score!=0)
-       {
-           scoreBoard.addScore(id,score);
-           setChanged();
-           notifyAll();
-       }
+    public void tryPlaceWord(Word word)
+    {
+        int result= myBoard.tryPlaceWord(word);
+        if (result > 0);
+        //add a-lot
 
     }
-
-    @Override
-    public void challenge(Word word) {
-    Boolean answer = DictionaryManager.get().challenge(convertWordToString(word));
-
+    public boolean challenge(String word)
+    {
+        return DictionaryManager.get().challenge(word);
+    }
+    public boolean query(String word)
+    {
+        return DictionaryManager.get().query(word);
     }
 
-    @Override
-    public void passTurn() {
-
+    public void passTurn(int turn)
+    {
+        currentTurn=turn=(turn+1)%players.size();
     }
 
-    @Override
-    public Tile drawTile() {
-     return bag.getRand();
-    }
+//    public String convertWordToString(Word word)
+//    {
+//        StringBuilder sb=new StringBuilder();
+//        for (Tile tile:word.tileWord) {
+//            sb.append(tile.getLetter());
+//        }
+//        return sb.toString();
+//    }
+
 
 }
