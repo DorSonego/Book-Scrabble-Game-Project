@@ -22,7 +22,7 @@ public class hostClientHandler implements ClientHandler {
         functions.put("tryPlaceWord",(String input)->
         {
             String[] data=input.split("-");
-            int ID_Current_Player = Integer.parseInt(data[0]);
+            int ID_Current_Player = Integer.parseInt(data[1]);
             player p =host.players.get(ID_Current_Player);
             String wordInput=data[2];
             int row=Integer.parseInt(data[3]);
@@ -38,8 +38,7 @@ public class hostClientHandler implements ClientHandler {
                 }
             }
             Word word =new Word(wordTile,row,column,isVert);
-            host.tryPlaceWord(word);
-        });
+            int k= host.tryPlaceWord(word);});
         functions.put("challenge",(String input)->
         {
             String[] strings = input.split("-");
@@ -62,10 +61,14 @@ public class hostClientHandler implements ClientHandler {
     }
 
 
-
-
     @Override
     public void handleClient(InputStream inFromClient, OutputStream outToClient) {
+
+
+        String[] s = inFromClient.toString().split("-");
+        queue.add(functions.get(s[0]));
+        outToClient.write();
+
 
     }
 
@@ -75,6 +78,7 @@ public class hostClientHandler implements ClientHandler {
     }
     public Runnable playersThreads()
     {
+        //enter while game server is still running
         while (true)
         {
 

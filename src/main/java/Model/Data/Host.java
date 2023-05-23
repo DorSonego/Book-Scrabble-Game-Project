@@ -1,11 +1,10 @@
 package Model.Data;
 
-import Model.Logic.ClientHandler;
+import Model.Logic.*;
 import Model.Logic.Dictionary;
-import Model.Logic.DictionaryManager;
-import Model.Logic.MyServer;
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.*;
@@ -17,15 +16,16 @@ public class Host extends Observable  {
     List<player> players=new ArrayList<>();
     Tile.Bag bag;
     ScoreBoard scoreBoard;
+    //add socket to game server
     Socket socket = new Socket();
     MyServer myServer=new MyServer(socket.getPort(),new hostClientHandler());
+    gameServerHandler serverHandler=new gameServerHandler();
 
     public Host()
     {
         this.myBoard=Board.getBoard();
         this.bag=Tile.Bag.getBag();
         this.scoreBoard=new ScoreBoard();
-
     }
     public void addPlayer(String name)
     {
@@ -33,11 +33,11 @@ public class Host extends Observable  {
     }
     public static Host getHost()
     {
-         if (host==null)
-             host=new Host();
-         return host;
+        if (host==null)
+            host=new Host();
+        return host;
     }
-    public void tryPlaceWord(Word word)
+    public int tryPlaceWord(Word word)
     {
         int result= myBoard.tryPlaceWord(word);
         if (result > 0);
@@ -46,7 +46,9 @@ public class Host extends Observable  {
     }
     public boolean challenge(String word)
     {
-        return DictionaryManager.get().challenge(word);
+        BookScrabbleHandler bookHandler=new BookScrabbleHandler();
+        InputStream in=
+                bookHandler.handleClient();
     }
     public boolean query(String word)
     {
