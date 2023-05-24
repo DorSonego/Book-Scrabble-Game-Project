@@ -1,7 +1,7 @@
 package Model.Data;
 
 public class player implements IPlayer {
-    public player(String name, int id) {
+    public player() {
     }
 
     @Override

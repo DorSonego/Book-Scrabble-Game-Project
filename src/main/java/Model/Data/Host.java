@@ -3,10 +3,7 @@ package Model.Data;
 import Model.Logic.*;
 import Model.Logic.Dictionary;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.*;
 
@@ -39,9 +36,10 @@ public class Host extends Observable  {
         catch (Exception e){e.printStackTrace();};
         return gamesocket;
     }
-    public void addPlayer(String name)
+    public int addPlayer(String name)
     {
         players.add(new player(name,++id));
+        return id;
     }
     public static Host getHost()
     {
@@ -62,19 +60,41 @@ public class Host extends Observable  {
 
         return result;
     }
+    public boolean C_and_Q(String type,String word)
+    {
+        try {
+            Scanner scanner = new Scanner(gamesocket.getInputStream());
+            PrintWriter printWriter=new PrintWriter(gamesocket.getOutputStream());
+            if(type.equals("challenge"))
+                printWriter.println("C,"+word);
+
+            else
+                printWriter.println("Q,"+word);
+            printWriter.flush();
+            if(scanner.next().equals("false"))
+                return false;
+            return true;
+        }catch (Exception e){e.printStackTrace();};
+        return false;
+    }
     public boolean challenge(String word)
     {
-       return serverHandler.challenge(word);
+        boolean ans=C_and_Q("challenge",word);
+        return ans;
     }
     public boolean query(String word)
     {
-        return DictionaryManager.get().query(word);
+        boolean ans=C_and_Q("query",word);
+        return ans;
     }
 
-    public void passTurn(int turn)
+    public int passTurn(int turn)
     {
         currentTurn=turn=(turn+1)%players.size();
+        return currentTurn;
+
     }
+
 
 //    public String convertWordToString(Word word)
 //    {
