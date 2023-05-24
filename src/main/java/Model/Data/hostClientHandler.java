@@ -1,10 +1,9 @@
 package Model.Data;
 
 import Model.Logic.ClientHandler;
+import Model.Logic.DictionaryManager;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
@@ -15,7 +14,8 @@ public class hostClientHandler implements ClientHandler {
     PrintWriter outputToGameServer;
     Map<String, Consumer<String>> functions =new HashMap<>();
     ForkJoinPool pool =new ForkJoinPool();
-    Queue<Consumer> queue = new LinkedBlockingQueue<>();
+    String answer;
+    boolean queryAnswer;
 
     public hostClientHandler() {
         host=Host.getHost();
@@ -38,24 +38,26 @@ public class hostClientHandler implements ClientHandler {
                 }
             }
             Word word =new Word(wordTile,row,column,isVert);
-            int k= host.tryPlaceWord(word);});
+            answer= host.tryPlaceWord(word)+"";});
         functions.put("challenge",(String input)->
         {
-            String[] strings = input.split("-");
-            int playerID=Integer.parseInt(strings[0]);
-            boolean challengeSuccessful=host.challenge(strings[2]);
+            String [] strings = input.split("-");
+
+
         });
-        functions.put("addPlayer",(String imput)->
+        functions.put("addPlayer",(String input)->
         {
-            host.addPlayer(imput.split("-")[0]);
+            host.addPlayer(input.split("-")[0]);
         });
         functions.put("query",(String input)->
         {
             String[] strings = input.split("-");
-            host.query(strings[1]);
         });
         functions.put("passTurn",(String input)->{
             host.passTurn(Integer.parseInt(input.split("-")[1]));
+        });
+        functions.put("endGame",(String input)->{
+            host.endGame();
         });
         pool.submit(playersThreads());
     }
@@ -63,15 +65,30 @@ public class hostClientHandler implements ClientHandler {
 
     @Override
     public void handleClient(InputStream inFromClient, OutputStream outToClient) {
+         inputScanner = new Scanner(inFromClient);
+         outputToGameServer = new PrintWriter(outToClient);
+         String s="";
 
+        try {
+            if(inputScanner.hasNextLine()){
+                s = inFromClient.toString().split("-")[0];
+            }
+        } catch (Exception e){
+            e.printStackTrace();}
 
-        String[] s = inFromClient.toString().split("-");
-        queue.add(functions.get(s[0]));
-        outToClient.write();
+        String ans =handelRequest(s);
+
+//        DictionaryManager dictionaryManager=DictionaryManager.get();
+//        String[] words2 = new String[queue.size()-1];
+//        for(int i =0 , s=1; s<queue.size(); i++ , s++){
+//            words2[i] = queue.get(s);
 
 
     }
-
+    public String handelRequest(String input)
+    {
+        return "";
+    }
     @Override
     public void close() {
 

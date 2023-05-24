@@ -9,5 +9,7 @@ public class ScoreBoard {
     {
 
     }
-    public void addScore(int player,int score){}
+    public void addScore(int player,int score){
+
+    }
 }

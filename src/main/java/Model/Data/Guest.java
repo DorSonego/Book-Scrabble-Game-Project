@@ -46,4 +46,13 @@ public class Guest implements Observable {
     }
 
 
+    @Override
+    public void addListener(InvalidationListener invalidationListener) {
+
+    }
+
+    @Override
+    public void removeListener(InvalidationListener invalidationListener) {
+
+    }
 }

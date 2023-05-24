@@ -1,28 +1,43 @@
 package Model.Data;
 
+import Model.Logic.BookScrabbleHandler;
 import Model.Logic.ClientHandler;
+import Model.Logic.DictionaryManager;
+import Model.Logic.MyServer;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Queue;
+import java.io.*;
+import java.net.Socket;
 import java.util.Scanner;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.function.Consumer;
-
-public class gameServerHandler implements ClientHandler {
 
 
-    @Override
-    public void handleClient(InputStream inFromClient, OutputStream outToClient) {
-
-    }
-
-    @Override
-    public void close() {
+public class gameServerHandler  {
+    Socket socket;
+    Scanner in;
+    PrintWriter out;
+    BookScrabbleHandler bookHandler;
+    DictionaryManager dictionaryManager = DictionaryManager.get();
+    MyServer gameServer;
+    public gameServerHandler(int port,String IP)
+    {
 
     }
+
+    public boolean challenge(String word)
+    {
+        in = new Scanner(word);
+        out = new PrintWriter(new StringWriter());
+        try {
+            out=new PrintWriter(socket.getOutputStream());
+            in=new Scanner(socket.getInputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        bookHandler.
+        return dictionaryManager.challenge(word);
+    }
+    public boolean query(String word)
+    {
+        return dictionaryManager.query(word);
+    }
+
 }
