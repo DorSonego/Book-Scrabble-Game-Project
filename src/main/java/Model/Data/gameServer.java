@@ -23,11 +23,9 @@ public class gameServer {
         try {
             String dics = String.join(",", dictionaries);
             String request = "c," + dics + "," + query;
-
             PrintWriter out = new PrintWriter(server.getOutputStream());
             out.println(request);
             out.flush();
-
             Scanner in = new Scanner(server.getInputStream());
             String response = in.next();
 
@@ -35,7 +33,6 @@ public class gameServer {
         } catch (IOException e) {
             System.out.println("Your code ran into an exception");
         }
-
         return false;
     }
 

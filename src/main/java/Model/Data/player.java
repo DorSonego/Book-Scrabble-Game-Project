@@ -16,28 +16,23 @@ public class player  {
         this.points = 0;
     }
 
-//    @Override
-//    public void tryPlaceWord(Word word) {
-//
-//    }
-//
-//    @Override
-//    public void challenge(Word word) {
-//
-//    }
-//
-//    @Override
-//    public void passTurn() {
-//
-//    }
-//
-//    @Override
-//    public Tile[] getHand() {
-//        return new Tile[0];
-//    }
-//
-//    @Override
-//    public void drawTile() {
-//
-//    }
+    public void tryPlaceWord(Word word) {
+
+    }
+
+    public void challenge(Word word) {
+
+    }
+
+    public void passTurn() {
+
+    }
+
+    public Tile[] getHand() {
+        return new Tile[0];
+    }
+
+    public void drawTile() {
+
+    }
 }

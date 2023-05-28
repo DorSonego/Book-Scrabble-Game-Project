@@ -17,6 +17,8 @@ public class hostClientHandler implements ClientHandler {
     ForkJoinPool pool =new ForkJoinPool();
     String answer;
     boolean queryAnswer;
+    Boolean stop=false;
+   // List<Function> assigments;
 
     public hostClientHandler() {
         host=Host.getHost();
@@ -97,6 +99,15 @@ public class hostClientHandler implements ClientHandler {
 
 
     }
+//    public void runAssigments()
+//    {
+//        Executors.newSingleThreadExecutor().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                playersThreads();
+//            }
+//        });
+//    }
     public String getBoardState()
     {
         Tile[][] theBoard= host.myBoard.getTile();
@@ -106,6 +117,7 @@ public class hostClientHandler implements ClientHandler {
             for(int j = 0;j<15;j++)
             {
                 sb.append(theBoard[i][j].letter);
+                sb.append("-");
             }
         }
         return sb.toString();
@@ -118,12 +130,13 @@ public class hostClientHandler implements ClientHandler {
     public void close() {
 
     }
-    public Runnable playersThreads()
-    {
-        //enter while game server is still running
-        while (true)
-        {
-
-        }
-    }
+//    public Runnable playersThreads()
+//    {
+//       //enter while game server is still running
+//        while (!stop)
+//        {
+//            //add blocking call if there isnt assigment
+//
+//        }
+//    }
 }

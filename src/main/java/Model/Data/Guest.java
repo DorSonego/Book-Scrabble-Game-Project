@@ -5,6 +5,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -22,12 +23,15 @@ public class Guest  {
 
 
     Socket serverConnection;
+    //may need change
+    String[][] board=new String[15][15];
     List<Tile> myTiles;
     int id;
+    int port;
+    String ip;
     boolean stop=false;
-    Board myBoard;
     InputStream in;
-    OutputStream out;
+    PrintWriter out;
     Scanner reader;
     PrintWriter writer;
     player currentPlayer;
@@ -40,7 +44,32 @@ public class Guest  {
         serverConnection = null;
         writer = null;
         reader = null;
+        // add user input
+        System.out.println("plz enter ip");
+        try {
+            Scanner s = new Scanner(System.in);
+            ip=s.nextLine();
+            System.out.println("plz enter port");
+            s = new Scanner(System.in);
+            port=Integer.parseInt(s.nextLine());
+        }
+        catch (Exception e){e.printStackTrace();}
+        connectToHost(port,ip);
 
+        startThread();
+    }
+    public void startThread()
+    {
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                listener();
+            }
+        });
+    }
+    public void stopThread()
+    {
+        stop=true;
     }
     public void connectToHost(int port,String ip)
     {
@@ -79,29 +108,44 @@ public class Guest  {
 
     public String sendRequest(String s)
     {
-
-        pw.println(s);
-        pw.flush();
-        String ans =scanner.next();
+        writer.println(s);
+        writer.flush();
+        String ans = reader.nextLine();
         return ans;
 
         //need to see what to do with answer
     }
+    public String[][] convertBoardFromString(String string_board)
+    {
+        //create function that convert string of board to 2d array
+    }
 
 
-//    public void listener()
-//    {
-//        while(!stop)
-//        {
-//            try {
-//                pw=new PrintWriter(hostSocket.getOutputStream());
-//                InputStream inputStream=hostSocket.getInputStream();
-//                if(inputStream.read()!=-1)
-//                {
-//                    exit(0);
-//                }
-//            }
-//            catch (Exception e){e.printStackTrace();};
-//        }
-//    }
+    public void listener()
+    {
+        while(!stop)
+        {
+            try {
+                StringBuilder stringBuilder=new StringBuilder();
+                out=new PrintWriter(serverConnection.getOutputStream());
+                Scanner scanner=new Scanner(serverConnection.getInputStream());
+                in=serverConnection.getInputStream();
+                int b=in.read();
+                if(b!=-1)
+                {
+                    stringBuilder.append(b);
+                    stringBuilder.append(scanner.nextLine());
+                    String msg =stringBuilder.toString();
+                    if (!(msg.equals("stop")))
+                    {
+                        stopThread();
+                    }
+                    else{
+                    convertBoardFromString(stringBuilder.toString());
+                }
+                }
+            }
+            catch (Exception e){e.printStackTrace();};
+        }
+    }
 }

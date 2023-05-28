@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.*;
 
 public class Host extends Observable  {
+    //need to identify between notify specific player vs notify all
     Board myBoard;
     static Host host;
     public boolean flag = false;
@@ -15,18 +16,18 @@ public class Host extends Observable  {
     List<player> players=new ArrayList<>();
     Tile.Bag bag;
 
-//    ScoreBoard scoreBoard;
-    //add socket to game server
     Socket gamesocket;
     int myPort;
     int gamePort;
     String gameServerIP;
-    MyServer myServer=new MyServer(myPort,new hostClientHandler());
+    MyServer myServer;
 
     public Host()
     {
         this.myBoard=Board.getBoard();
         this.bag=Tile.Bag.getBag();
+        this.myPort=8000;
+        myServer=new MyServer(myPort,new hostClientHandler());
 //        this.scoreBoard=new ScoreBoard();
     }
     public Socket tryOpenPort()
@@ -51,12 +52,17 @@ public class Host extends Observable  {
     public void endGame(){
         myServer.close();
         flag = true;
+        //send massege "all-endGame"
+        //need to close threads in guests
     }
     public int tryPlaceWord(Word word)
     {
         int result= myBoard.tryPlaceWord(word);
         if (result > 0);
+        //update board and send board to all players
+        //update scoreBoard
         //add a-lot
+
 
 
         return result;
@@ -95,7 +101,7 @@ public class Host extends Observable  {
         return currentTurn;
 
     }
-
+//add thread for the host player and logic to send to players
 
 //    public String convertWordToString(Word word)
 //    {
