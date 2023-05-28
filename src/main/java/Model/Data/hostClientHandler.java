@@ -41,14 +41,14 @@ public class hostClientHandler implements ClientHandler {
                 }
             }
             Word word =new Word(wordTile,row,column,isVert);
-            return host.tryPlaceWord(word)+"";
+            return host.players.get(ID_Current_Player).tryPlaceWord(word)+"";
 
         });
 
         functions.put("challenge",(String input)->
         {
             String [] strings = input.split("-");
-            boolean ans=host.challenge(strings[1]);
+            boolean ans=host.challenge(strings[2]);
             if(ans)
                 return "true";
             return "false";
@@ -66,7 +66,7 @@ public class hostClientHandler implements ClientHandler {
             return "false";
         });
         functions.put("passTurn",(String input)->{
-           return ""+ host.passTurn(Integer.parseInt(input.split("-")[1]));
+          return  host.passTurn(Integer.parseInt(input.split("-")[1]))+"";
         });
         functions.put("endGame",(String input)->{
             host.endGame();

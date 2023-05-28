@@ -7,12 +7,16 @@ import java.io.*;
 import java.net.Socket;
 import java.util.*;
 
-public class Host extends Observable  {
+
+
+
+public class Host extends Observable implements IPlayer {
     //need to identify between notify specific player vs notify all
     Board myBoard;
     static Host host;
     public boolean flag = false;
-    int id=0;int currentTurn=0;
+    int id=0;
+    int currentTurn=0;
     List<player> players=new ArrayList<>();
     Tile.Bag bag;
 
@@ -21,13 +25,15 @@ public class Host extends Observable  {
     int gamePort;
     String gameServerIP;
     MyServer myServer;
+    hostClientHandler myHostClientHandler;
 
     public Host()
     {
         this.myBoard=Board.getBoard();
         this.bag=Tile.Bag.getBag();
         this.myPort=8000;
-        myServer=new MyServer(myPort,new hostClientHandler());
+        myHostClientHandler = new hostClientHandler();
+        myServer=new MyServer(myPort,myHostClientHandler);
 //        this.scoreBoard=new ScoreBoard();
     }
     public Socket tryOpenPort()
@@ -35,7 +41,7 @@ public class Host extends Observable  {
         try {
             gamesocket=new Socket(gameServerIP,gamePort);
         }
-        catch (Exception e){e.printStackTrace();};
+        catch (Exception e){e.printStackTrace();}
         return gamesocket;
     }
     public int addPlayer(String name)
@@ -49,24 +55,21 @@ public class Host extends Observable  {
             host=new Host();
         return host;
     }
-    public void endGame(){
+    public void endGame(){                //send massage "all-endGame" //need to close threads in guests
+
         myServer.close();
         flag = true;
-        //send massege "all-endGame"
-        //need to close threads in guests
+        String s = "all-endGame";
+        s.notifyAll();
+        try {
+            PrintWriter outEndGame=new PrintWriter(gamesocket.getOutputStream());
+            outEndGame.println(s);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
-    public int tryPlaceWord(Word word)
-    {
-        int result= myBoard.tryPlaceWord(word);
-        if (result > 0);
-        //update board and send board to all players
-        //update scoreBoard
-        //add a-lot
 
-
-
-        return result;
-    }
     public boolean C_and_Q(String type,String word)
     {
         try {
@@ -81,25 +84,42 @@ public class Host extends Observable  {
             if(scanner.next().equals("false"))
                 return false;
             return true;
-        }catch (Exception e){e.printStackTrace();};
+        }catch (Exception e){e.printStackTrace();}
         return false;
     }
+    @Override
     public boolean challenge(String word)
     {
-        boolean ans=C_and_Q("challenge",word);
-        return ans;
+        return C_and_Q("challenge",word);
     }
     public boolean query(String word)
     {
-        boolean ans=C_and_Q("query",word);
-        return ans;
+        return C_and_Q("query",word);
     }
-
+    @Override
     public int passTurn(int turn)
     {
-        currentTurn=turn=(turn+1)%players.size();
+        currentTurn = (turn+1)%players.size();
         return currentTurn;
 
+    }
+
+    @Override
+    public void tryPlaceWord(String word,int row,int coulmn,String direction) {
+        String msg= "tryPlaceWord-"+id+"-"+word+"-"+row+"-"+coulmn+"-"+direction;
+        myHostClientHandler.handelRequest(msg);
+
+    }
+
+
+    @Override
+    public Tile[] getHand() {
+        return new Tile[0];
+    }
+
+    @Override
+    public void drawTile() {
+        this.bag.getRand();
     }
 //add thread for the host player and logic to send to players
 

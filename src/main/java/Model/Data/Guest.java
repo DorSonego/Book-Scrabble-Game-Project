@@ -1,25 +1,12 @@
 package Model.Data;
 
-import Model.Logic.ClientHandler;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 import java.util.Scanner;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ForkJoinPool;
 
-import static java.lang.System.exit;
-
-public class Guest  {
+public class Guest implements IPlayer  {
 
 
     Socket serverConnection;
@@ -34,7 +21,6 @@ public class Guest  {
     PrintWriter out;
     Scanner reader;
     PrintWriter writer;
-    player currentPlayer;
     String name;
 
     Thread thread ;
@@ -67,10 +53,7 @@ public class Guest  {
             }
         });
     }
-    public void stopThread()
-    {
-        stop=true;
-    }
+
     public void connectToHost(int port,String ip)
     {
         try {
@@ -84,41 +67,50 @@ public class Guest  {
         }
     }
 
+    @Override
 
     public void tryPlaceWord(String word,int row,int coulmn,String direction)
     {
         String msg= "tryPlaceWord-"+id+"-"+word+"-"+row+"-"+coulmn+"-"+direction;
         int score = Integer.parseInt(sendRequest(msg));
     }
-
-    public void tryChallenge()
+    @Override
+    public boolean challenge(String word)
     {
+        String msg= "challenge-"+id+"-"+word;
+        return Boolean.parseBoolean(sendRequest(msg));
 
     }
 
 
-//    public void passTheTurn(){}
-//    public void addPlayer(){
-//
-//
-//    }
-//    public void endGame(){
-//
-//    }
+    public void endGame(){
+        stop=true;
+        try {
+            this.thread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     public String sendRequest(String s)
     {
         writer.println(s);
         writer.flush();
-        String ans = reader.nextLine();
-        return ans;
+        return reader.nextLine();
 
         //need to see what to do with answer
     }
-    public String[][] convertBoardFromString(String string_board)
-    {
-        //create function that convert string of board to 2d array
+    public String[][] convertBoardFromString(String string_board) {
+        String[] rows = string_board.trim().split("\n");
+        String[][] tempBoard = new String[rows.length][];
+        for (int i = 0; i < rows.length; i++) {
+            tempBoard[i] = rows[i].trim().split("");
+        }
+        board =tempBoard;
+        return board;
     }
+
 
 
     public void listener()
@@ -136,9 +128,9 @@ public class Guest  {
                     stringBuilder.append(b);
                     stringBuilder.append(scanner.nextLine());
                     String msg =stringBuilder.toString();
-                    if (!(msg.equals("stop")))
+                    if (!(msg.equals("all-endGame")))
                     {
-                        stopThread();
+                        endGame();
                     }
                     else{
                     convertBoardFromString(stringBuilder.toString());
@@ -147,5 +139,21 @@ public class Guest  {
             }
             catch (Exception e){e.printStackTrace();};
         }
+    }
+
+    @Override
+    public int passTurn(int turn) {
+        this.sendRequest("passTurn");
+        return turn+1;
+    }
+
+    @Override
+    public Tile[] getHand() {
+        return new Tile[0];
+    }
+
+    @Override
+    public void drawTile() {
+        this.myTiles.add(Tile.Bag.getBag().getRand());
     }
 }
