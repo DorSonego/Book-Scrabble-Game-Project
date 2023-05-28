@@ -9,7 +9,7 @@ public interface IPlayer {
     public void tryPlaceWord(String word,int row,int coulmn,String direction);
     public boolean challenge(String word);
     public int passTurn(int turn);
-    public Tile[] getHand();
+    public List<Tile> getHand();
     public void drawTile();
 
 

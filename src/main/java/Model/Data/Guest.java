@@ -101,14 +101,19 @@ public class Guest implements IPlayer  {
 
         //need to see what to do with answer
     }
-    public String[][] convertBoardFromString(String string_board) {
-        String[] rows = string_board.trim().split("\n");
-        String[][] tempBoard = new String[rows.length][];
-        for (int i = 0; i < rows.length; i++) {
-            tempBoard[i] = rows[i].trim().split("");
+    public void convertBoardFromString(String string_board) {
+        String[] rows=string_board.trim().split("\n");
+        String[][] tempBoard = new String[15][15];
+        int counter=0;
+        for (String s:rows){
+            String[] string=s.split(",");
+            for (int i =0;i<string.length;i++)
+            {
+                tempBoard[counter][i]=string[i];
+            }
+            counter++;
         }
-        board =tempBoard;
-        return board;
+       board=tempBoard;
     }
 
 
@@ -128,12 +133,20 @@ public class Guest implements IPlayer  {
                     stringBuilder.append(b);
                     stringBuilder.append(scanner.nextLine());
                     String msg =stringBuilder.toString();
-                    if (!(msg.equals("all-endGame")))
+                    if ((msg.equals("all-endGame")))
                     {
                         endGame();
                     }
                     else{
-                    convertBoardFromString(stringBuilder.toString());
+                        String tmp=msg;
+                        String[] split=tmp.split("-");
+//                        String getter=split[0];
+//                        String getter2=split[1];
+//
+//                        if (getter.equals("all"))
+//                        {
+                            convertBoardFromString(stringBuilder.toString());
+                       // }
                 }
                 }
             }
@@ -148,8 +161,8 @@ public class Guest implements IPlayer  {
     }
 
     @Override
-    public Tile[] getHand() {
-        return new Tile[0];
+    public List<Tile> getHand() {
+        return myTiles;
     }
 
     @Override

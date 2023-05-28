@@ -2,12 +2,13 @@ package Model.Data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class player  {
 
     public int id;
     public  String name;
-    ArrayList<Tile> givenTiles;
+    List<Tile> givenTiles;
     Tile.Bag bag;
     int points;
 
@@ -33,8 +34,8 @@ public class player  {
 
     }
 
-    public Tile[] getHand() {
-        return new Tile[0];
+    public List<Tile> getHand() {
+       return givenTiles;
     }
 
     public void drawTile() {

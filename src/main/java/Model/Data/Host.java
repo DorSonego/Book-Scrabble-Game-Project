@@ -19,6 +19,8 @@ public class Host extends Observable implements IPlayer {
     int currentTurn=0;
     List<player> players=new ArrayList<>();
     Tile.Bag bag;
+    //need init
+    List<Tile>myTiles;
 
     Socket gamesocket;
     int myPort;
@@ -35,6 +37,19 @@ public class Host extends Observable implements IPlayer {
         myHostClientHandler = new hostClientHandler();
         myServer=new MyServer(myPort,myHostClientHandler);
 //        this.scoreBoard=new ScoreBoard();
+    }
+    public String BoardToString()
+    {
+        StringBuilder sb=new StringBuilder();
+        Tile[][]arr= myBoard.getTile();
+        for (Tile[] t:arr) {
+            for (Tile tile :t) {
+                sb.append(tile.letter);
+                sb.append(",");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
     }
     public Socket tryOpenPort()
     {
@@ -111,10 +126,9 @@ public class Host extends Observable implements IPlayer {
 
     }
 
-
     @Override
-    public Tile[] getHand() {
-        return new Tile[0];
+    public List<Tile> getHand() {
+        return myTiles;
     }
 
     @Override
