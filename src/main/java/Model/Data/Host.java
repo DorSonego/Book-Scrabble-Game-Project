@@ -10,7 +10,7 @@ import java.util.*;
 public class Host extends Observable  {
     Board myBoard;
     static Host host;
-    boolean flag = false;
+    public boolean flag = false;
     int id=0;int currentTurn=0;
     List<player> players=new ArrayList<>();
     Tile.Bag bag;

@@ -32,7 +32,7 @@ public class gameServerHandler  {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        bookHandler.
+
         return dictionaryManager.challenge(word);
     }
     public boolean query(String word)
