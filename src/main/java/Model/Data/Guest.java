@@ -19,6 +19,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
 
+import static java.lang.System.exit;
+
 public class Guest implements Observable {
 
 
@@ -98,7 +100,6 @@ public class Guest implements Observable {
     }
     public void listener()
     {
-
         while(!stop)
         {
             try {
@@ -106,12 +107,10 @@ public class Guest implements Observable {
                 InputStream inputStream=hostSocket.getInputStream();
                 if(inputStream.read()!=-1)
                 {
-                    s
+                    exit(0);
                 }
             }
             catch (Exception e){e.printStackTrace();};
-
-
         }
     }
 }

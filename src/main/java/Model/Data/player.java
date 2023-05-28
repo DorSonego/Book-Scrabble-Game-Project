@@ -1,7 +1,12 @@
 package Model.Data;
 
 public class player implements IPlayer {
-    public player() {
+    public int id;
+    public  String name;
+
+    public player(String name, int id) {
+        this.name = name;
+        this.id = id;
     }
 
     @Override

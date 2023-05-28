@@ -14,7 +14,8 @@ public class Host extends Observable  {
     int id=0;int currentTurn=0;
     List<player> players=new ArrayList<>();
     Tile.Bag bag;
-    ScoreBoard scoreBoard;
+
+//    ScoreBoard scoreBoard;
     //add socket to game server
     Socket gamesocket;
     int myPort;
@@ -26,7 +27,7 @@ public class Host extends Observable  {
     {
         this.myBoard=Board.getBoard();
         this.bag=Tile.Bag.getBag();
-        this.scoreBoard=new ScoreBoard();
+//        this.scoreBoard=new ScoreBoard();
     }
     public Socket tryOpenPort()
     {
