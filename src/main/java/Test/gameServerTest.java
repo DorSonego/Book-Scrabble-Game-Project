@@ -7,8 +7,8 @@ public class gameServerTest {
         public static void main(String[] args) throws IOException {
             gameServer f = new gameServer(9999, "localhost");
 
-            String[][] challengeTests = {{"test1", "word1"}, {"test2", "word2"}};
-            String[][] queryTests = {{"test1", "word1"}, {"test2", "word2"}};
+            String[][] challengeTests = {{"test1", "word"}, {"test2", "word1"}};
+            String[][] queryTests = {{"test1", "word"}, {"test2", "word1"}};
 
             runTests(f, "Challenge", challengeTests);
             runTests(f, "Query", queryTests);

@@ -4,10 +4,7 @@ import Model.Logic.ClientHandler;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -21,18 +18,18 @@ import java.util.concurrent.ForkJoinPool;
 
 import static java.lang.System.exit;
 
-public class Guest implements Observable {
+public class Guest  {
 
 
-    Socket hostSocket;
+    Socket serverConnection;
     List<Tile> myTiles;
     int id;
     boolean stop=false;
     Board myBoard;
     InputStream in;
     OutputStream out;
-    Scanner scanner;
-    PrintWriter pw;
+    Scanner reader;
+    PrintWriter writer;
     player currentPlayer;
     String name;
 
@@ -40,46 +37,49 @@ public class Guest implements Observable {
     public Guest(int id)
     {
         this.id=id;
+        serverConnection = null;
+        writer = null;
+        reader = null;
 
     }
-
-
     public void connectToHost(int port,String ip)
     {
         try {
-            hostSocket = new Socket(ip,port);
+            serverConnection = new Socket(ip,port);
+            reader= new Scanner(serverConnection.getInputStream());
+            writer=new PrintWriter(serverConnection.getOutputStream());
         }
         catch (IOException e)
         {
             throw new RuntimeException("unable to connect to Host");
         }
     }
+
+
     public void tryPlaceWord(String word,int row,int coulmn,String direction)
     {
         String msg= "tryPlaceWord-"+id+"-"+word+"-"+row+"-"+coulmn+"-"+direction;
         int score = Integer.parseInt(sendRequest(msg));
     }
+
     public void tryChallenge()
     {
 
     }
-    public void tryQuery(){}
-    public void passTheTurn(){}
-    public void addPlayer(){
 
 
-    }
-    public void endGame(){
-
-    }
+//    public void passTheTurn(){}
+//    public void addPlayer(){
+//
+//
+//    }
+//    public void endGame(){
+//
+//    }
 
     public String sendRequest(String s)
     {
-        try {
-            scanner= new Scanner(hostSocket.getInputStream());
-            pw=new PrintWriter(hostSocket.getOutputStream());
-        }
-        catch (Exception e){e.printStackTrace();};
+
         pw.println(s);
         pw.flush();
         String ans =scanner.next();
@@ -89,28 +89,19 @@ public class Guest implements Observable {
     }
 
 
-    @Override
-    public void addListener(InvalidationListener invalidationListener) {
-
-    }
-
-    @Override
-    public void removeListener(InvalidationListener invalidationListener) {
-
-    }
-    public void listener()
-    {
-        while(!stop)
-        {
-            try {
-                pw=new PrintWriter(hostSocket.getOutputStream());
-                InputStream inputStream=hostSocket.getInputStream();
-                if(inputStream.read()!=-1)
-                {
-                    exit(0);
-                }
-            }
-            catch (Exception e){e.printStackTrace();};
-        }
-    }
+//    public void listener()
+//    {
+//        while(!stop)
+//        {
+//            try {
+//                pw=new PrintWriter(hostSocket.getOutputStream());
+//                InputStream inputStream=hostSocket.getInputStream();
+//                if(inputStream.read()!=-1)
+//                {
+//                    exit(0);
+//                }
+//            }
+//            catch (Exception e){e.printStackTrace();};
+//        }
+//    }
 }

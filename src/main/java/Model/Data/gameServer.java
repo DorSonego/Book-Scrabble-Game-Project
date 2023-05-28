@@ -16,7 +16,7 @@ public class gameServer {
         if (address == null){
             address = "localhost";
         }
-        server = new Socket(address, port);
+        server = new Socket("localhost", port);
     }
 
     public boolean challenge(String[] dictionaries, String query) {
