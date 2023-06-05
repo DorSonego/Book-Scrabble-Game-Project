@@ -9,64 +9,33 @@ import java.util.*;
 
 public class Host {
 
+    hostServer hostServer;
+    Game game;
+    public static Host host;
 
-    Board myBoard;
-    static Host host;
-    public boolean flag = false;
-    int id=0;
-    int currentTurn=0;
-    Tile.Bag bag;
-    //need init
-    List<Tile>myTiles;
-
-    Socket gamesocket;
-    int myPort;
-    int gamePort;
-    String gameServerIP;
-    MyServer myServer;
-    hostClientHandler myHostClientHandler;
-
-    public Host()
+    public Host(int port)
     {
-        this.myBoard=Board.getBoard();
-        this.bag=Tile.Bag.getBag();
-        this.myPort=8000;
-        myHostClientHandler = new hostClientHandler();
-        myServer=new MyServer(myPort,myHostClientHandler);
-//        this.scoreBoard=new ScoreBoard();
-    }
-    public String BoardToString()
-    {
-        StringBuilder sb=new StringBuilder();
-        Tile[][]arr= myBoard.getTile();
-        for (Tile[] t:arr) {
-            for (Tile tile :t) {
-                sb.append(tile.letter);
-                sb.append(",");
-            }
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
-    public Socket tryOpenPort()
-    {
-        try {
-            gamesocket=new Socket(gameServerIP,gamePort);
-        }
-        catch (Exception e){e.printStackTrace();}
-        return gamesocket;
-    }
-    public int addPlayer(String name)
-    {
-        players.add(new player(name,++id));
-        return id;
+        hostServer = new hostServer(port, new GuestHandler());
+        Game game = new Game();
+        hostServer.start();
     }
     public static Host getHost()
     {
         if (host==null)
-            host=new Host();
+            host=new Host(3000);
         return host;
     }
+    public void addPlayer(String playerName) {
+        if(game.getPlayers().size()<4){
+            game.addPlayer(playerName);
+        }
+    }
+    public String challenge(){
+
+    }
+
+
+
     public void endGame(){                //send massage "all-endGame" //need to close threads in guests
 
         myServer.close();
@@ -99,7 +68,8 @@ public class Host {
         }catch (Exception e){e.printStackTrace();}
         return false;
     }
-    @Override
+
+
     public boolean challenge(String word)
     {
         return C_and_Q("challenge",word);
@@ -108,7 +78,8 @@ public class Host {
     {
         return C_and_Q("query",word);
     }
-    @Override
+
+
     public int passTurn(int turn)
     {
         currentTurn = (turn+1)%players.size();
@@ -116,19 +87,19 @@ public class Host {
 
     }
 
-    @Override
-    public void tryPlaceWord(String word,int row,int coulmn,String direction) {
-        String msg= "tryPlaceWord-"+id+"-"+word+"-"+row+"-"+coulmn+"-"+direction;
+
+    public int tryPlaceWord(String word,int row,int coulmn,String direction) {
+        String msg= "tryPlaceWord"+"-"+word+"-"+row+"-"+coulmn+"-"+direction;
         myHostClientHandler.handelRequest(msg);
 
     }
 
-    @Override
+
     public List<Tile> getHand() {
         return myTiles;
     }
 
-    @Override
+
     public void drawTile() {
         this.bag.getRand();
     }
