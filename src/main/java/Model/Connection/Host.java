@@ -12,12 +12,16 @@ public class Host {
     hostServer hostServer;
     Game game;
     public static Host host;
+    String ip;
+    int port;
 
     public Host(int port)
     {
         hostServer = new hostServer(port, new GuestHandler());
         Game game = new Game();
         hostServer.start();
+        ip="localhost";
+        this.port=port;
     }
     public static Host getHost()
     {
@@ -25,13 +29,28 @@ public class Host {
             host=new Host(3000);
         return host;
     }
+    private String sendToServer(String word){
+        String result = "";
+        try {
+            Socket socket = new Socket(ip, port);
+            PrintWriter out = new PrintWriter(socket.getOutputStream());
+            Scanner in = new Scanner(socket.getInputStream());
+            out.println(word);
+            out.flush();
+            result = in.nextLine();
+            socket.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
     public void addPlayer(String playerName) {
         if(game.getPlayers().size()<4){
             game.addPlayer(playerName);
         }
     }
-    public String challenge(){
-
+    public String challenge(String word){
+        return sendToServer(word);
     }
 
 
@@ -70,10 +89,6 @@ public class Host {
     }
 
 
-    public boolean challenge(String word)
-    {
-        return C_and_Q("challenge",word);
-    }
     public boolean query(String word)
     {
         return C_and_Q("query",word);
