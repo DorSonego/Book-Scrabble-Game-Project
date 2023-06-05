@@ -1,7 +1,7 @@
 package Test;
 
-import Model.Logic.CacheManager;
-import Model.Logic.LRU;
+import Model.Dictionary.CacheManager;
+import Model.Dictionary.LRU;
 
 public class TestCacheManager {
     public static void testCacheManager() {

@@ -1,7 +1,7 @@
 package Test;
 
-import Model.Logic.ClientHandler;
-import Model.Logic.MyServer;
+import Model.Connection.ClientHandler;
+import Model.Connection.MyServer;
 
 import java.io.InputStream;
 import java.io.OutputStream;

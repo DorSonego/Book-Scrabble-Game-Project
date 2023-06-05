@@ -1,4 +1,4 @@
-package Model.Data;
+package Model.Connection;
 
 import javafx.concurrent.Task;
 

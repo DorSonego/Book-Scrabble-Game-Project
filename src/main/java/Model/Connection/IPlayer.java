@@ -1,4 +1,6 @@
-package Model.Data;
+package Model.Connection;
+
+import Model.Data.Tile;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package Model.Logic;
+package Model.Connection;
 
 import java.io.InputStream;
 import java.io.OutputStream;

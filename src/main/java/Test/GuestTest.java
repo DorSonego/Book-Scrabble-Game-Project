@@ -1,9 +1,9 @@
 package Test;
 
 import Model.Data.Board;
-import Model.Data.Guest;
+import Model.Connection.Guest;
 import Model.Data.Tile;
-import Model.Data.player;
+import Model.Connection.player;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 

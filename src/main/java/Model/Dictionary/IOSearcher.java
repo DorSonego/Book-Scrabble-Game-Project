@@ -21,7 +21,7 @@
 //
 //}
 
-package Model.Logic;;
+package Model.Dictionary;;
 
         import java.io.File;
         import java.util.Scanner;

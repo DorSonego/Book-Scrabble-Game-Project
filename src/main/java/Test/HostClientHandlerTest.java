@@ -1,8 +1,7 @@
 package Test;
 
 
-import Model.Data.hostClientHandler;
-import java.lang.Object;
+import Model.Connection.hostClientHandler;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

@@ -1,4 +1,6 @@
-package Model.Logic;
+package Model.Connection;
+
+import Model.Connection.ClientHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -17,7 +19,7 @@ public class MyServer {
         stop=false;
     }
 
-    private void runServer() {
+    public void runServer() {
         ServerSocket server=null;
         Socket aClient=null;
         try {

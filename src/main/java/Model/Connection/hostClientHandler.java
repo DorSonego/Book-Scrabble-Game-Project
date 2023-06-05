@@ -1,12 +1,14 @@
-package Model.Data;
+package Model.Connection;
 
-import Model.Logic.ClientHandler;
-import Model.Logic.DictionaryManager;
+import Model.Connection.ClientHandler;
+import Model.Connection.Host;
+import Model.Connection.player;
+import Model.Data.Tile;
+import Model.Data.Word;
 
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class hostClientHandler implements ClientHandler {

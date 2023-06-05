@@ -1,4 +1,4 @@
-package Model.Logic;
+package Model.Dictionary;
 import java.util.LinkedHashSet;
 
 public class CacheManager {

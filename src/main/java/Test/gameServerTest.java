@@ -1,11 +1,11 @@
 package Test;
-import Model.Data.gameServer;
+import Model.Connection.hostServer;
 
 import java.io.IOException;
 public class gameServerTest {
 
         public static void main(String[] args) throws IOException {
-            gameServer f = new gameServer(9999, "localhost");
+            hostServer f = new hostServer(9999, "localhost");
 
             String[][] challengeTests = {{"test1", "word"}, {"test2", "word1"}};
             String[][] queryTests = {{"test1", "word"}, {"test2", "word1"}};
@@ -14,7 +14,7 @@ public class gameServerTest {
             runTests(f, "Query", queryTests);
         }
 
-        public static void runTests(gameServer f, String testName, String[][] testCases) throws IOException {
+        public static void runTests(hostServer f, String testName, String[][] testCases) throws IOException {
             for (String[] testCase : testCases) {
                 String testCaseName = testCase[0];
                 String expectedOutput = testCase[1];

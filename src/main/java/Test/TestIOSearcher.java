@@ -1,6 +1,6 @@
 package Test;
 
-import Model.Logic.IOSearcher;
+import Model.Dictionary.IOSearcher;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;

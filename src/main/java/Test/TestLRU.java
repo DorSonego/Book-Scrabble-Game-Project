@@ -1,7 +1,7 @@
 package Test;
 
-import Model.Logic.CacheReplacementPolicy;
-import Model.Logic.LRU;
+import Model.Dictionary.CacheReplacementPolicy;
+import Model.Dictionary.LRU;
 
 public class TestLRU {
     public static void testLRU() {

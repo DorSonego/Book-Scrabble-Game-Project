@@ -1,5 +1,7 @@
 package Model.Data;
 
+import Model.Connection.player;
+
 import java.util.*;
 
 public class ScoreBoard {
@@ -7,7 +9,7 @@ public class ScoreBoard {
     //needs an implementation
     public ScoreBoard(List<player> players)
     {
-        for (Model.Data.player player : players) {
+        for (Model.Connection.player player : players) {
             scores.put(player.name, player.points);
         }
 

@@ -1,12 +1,8 @@
 package Test;
-import Model.Data.Host;
+import Model.Connection.Host;
 import Model.Data.Tile;
 import Model.Data.Word;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 class HostTest {
 
     void testAddPlayer() {

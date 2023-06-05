@@ -1,7 +1,7 @@
 package Test;
 
-import Model.Logic.BookScrabbleHandler;
-import Model.Logic.MyServer;
+import Model.Dictionary.BookScrabbleHandler;
+import Model.Connection.MyServer;
 
 import java.io.FileWriter;
 import java.io.IOException;

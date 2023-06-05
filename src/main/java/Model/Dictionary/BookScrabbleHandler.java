@@ -1,10 +1,12 @@
-package Model.Logic;
+package Model.Dictionary;
+import Model.Connection.ClientHandler;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Scanner;
 import java.io.PrintWriter;
 
-public class BookScrabbleHandler implements ClientHandler{
+public class BookScrabbleHandler implements ClientHandler {
     String lineO;
 
     String[] words;

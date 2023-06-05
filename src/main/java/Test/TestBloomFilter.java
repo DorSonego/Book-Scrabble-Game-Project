@@ -1,6 +1,6 @@
 package Test;
 
-import Model.Logic.BloomFilter;
+import Model.Dictionary.BloomFilter;
 
 public class TestBloomFilter {
     public static void testBloomFilter() {

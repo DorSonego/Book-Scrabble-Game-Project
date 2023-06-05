@@ -1,4 +1,4 @@
-package Model.Logic;
+package Model.Dictionary;
 import java.util.LinkedHashMap;
 import java.util.Map;
 public class LFU implements CacheReplacementPolicy {

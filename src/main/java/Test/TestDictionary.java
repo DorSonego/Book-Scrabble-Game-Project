@@ -1,6 +1,6 @@
 package Test;
 
-import Model.Logic.Dictionary;
+import Model.Dictionary.Dictionary;
 
 public class TestDictionary {
     public static void testDictionary() {

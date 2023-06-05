@@ -1,4 +1,4 @@
-package Model.Logic;
+package Model.Dictionary;
 public interface CacheReplacementPolicy{
 	void add(String word);
 	String remove(); 

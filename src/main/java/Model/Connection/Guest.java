@@ -1,4 +1,6 @@
-package Model.Data;
+package Model.Connection;
+
+import Model.Data.Tile;
 
 import java.io.*;
 import java.net.Socket;
@@ -6,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 
-public class Guest implements IPlayer  {
+public class Guest implements IPlayer {
 
 
     Socket serverConnection;

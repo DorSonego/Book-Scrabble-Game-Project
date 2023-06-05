@@ -1,23 +1,20 @@
-package Model.Data;
+package Model.Connection;
 
-import Model.Logic.*;
-import Model.Logic.Dictionary;
+import Model.Data.Board;
+import Model.Data.Tile;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
 
+public class Host {
 
 
-
-public class Host extends Observable implements IPlayer {
-    //need to identify between notify specific player vs notify all
     Board myBoard;
     static Host host;
     public boolean flag = false;
     int id=0;
     int currentTurn=0;
-    List<player> players=new ArrayList<>();
     Tile.Bag bag;
     //need init
     List<Tile>myTiles;

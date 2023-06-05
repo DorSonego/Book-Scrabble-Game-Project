@@ -1,6 +1,6 @@
 package Test;
 
-import Model.Logic.DictionaryManager;
+import Model.Dictionary.DictionaryManager;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;

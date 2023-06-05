@@ -1,7 +1,7 @@
 package Test;
 
-import Model.Logic.CacheReplacementPolicy;
-import Model.Logic.LFU;
+import Model.Dictionary.CacheReplacementPolicy;
+import Model.Dictionary.LFU;
 
 public class TestLFU {
     public static void testLFU() {
