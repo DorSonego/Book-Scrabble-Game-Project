@@ -11,6 +11,7 @@ public class ViewModel{ // Later implement ViewModelFacade
 
     //Other parameters:...
     GameManager model; //Game status
+    game
 
 
 
