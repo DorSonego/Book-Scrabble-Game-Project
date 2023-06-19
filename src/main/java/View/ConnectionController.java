@@ -9,7 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
+import model.logic.client.Client;
+import model.logic.host.GameManager;
+import view.data.GameModelReceiver;
+import view.data.ViewSharedData;
 
 
 import java.io.IOException;
