@@ -25,8 +25,8 @@ easily find inspiration for their next move.
 * [Liav Nadam](https://github.com/Liavnadam)
 
 ## Video links
- * Demo video - will be added
- * Project presentation video - will be added
+ * Demo video 
+ * Project presentation video 
 
 ## Gantt
 ![image](https://user-images.githubusercontent.com/118439273/230920866-38d71903-4875-4e5c-8094-2b03d927cd58.png)
