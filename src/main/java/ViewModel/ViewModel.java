@@ -2,7 +2,7 @@ package viewModel;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
+import model.logic.host.GameManager;
 
 public class ViewModel{ // Later implement ViewModelFacade
     //Properties for view:...
